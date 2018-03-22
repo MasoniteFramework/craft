@@ -1,0 +1,50 @@
+from cleo import Command
+import os
+
+
+class PackageCommand(Command):
+    """
+    Creates a new package.
+
+    package
+        {name : Name of your Masonite project}
+    """
+
+    def handle(self):
+        name = self.argument('name')
+
+        ## create setup.py
+        setup = open(os.path.join(os.getcwd(), 'setup.py'), 'w+')
+        setup.write("from setuptools import setup\n\n")
+        setup.write('setup(\n    ')
+        setup.write('name="{0}",\n    '.format(name))
+        setup.write("version='0.0.1',\n    ")
+        setup.write("packages=['{0}'],\n    ".format(name))
+        setup.write("install_requires=[\n        ")
+        setup.write("'masonite',\n    ")
+        setup.write("],\n    ")
+        setup.write('include_package_data=True,\n')
+        setup.write(')\n')
+        setup.close()
+
+        manifest = open(os.path.join(os.getcwd(), 'MANIFEST.in'), 'w+')
+        manifest.close()
+
+        if not os.path.exists(name):
+            os.makedirs(name)
+
+        init_file = open(os.path.join(
+            os.getcwd(), '{0}/{1}'.format(name, '__init__.py')), 'w+')
+        init_file.close()
+
+        integration_file = open(os.path.join(
+            os.getcwd(), '{0}/{1}'.format(name, 'integration.py')), 'w+')
+
+        integration_file.write(
+            'from masonite.packages import create_or_append_config\n')
+        integration_file.write('import os\n\n')
+        integration_file.write(
+            'package_directory = os.path.dirname(os.path.realpath(__file__))\n\n')
+        integration_file.write('def boot():\n    pass')
+        integration_file.close()
+        self.info('Package Created Successfully!')
