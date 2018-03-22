@@ -1,5 +1,5 @@
 venv
-cleocli.egg-info
+craft.egg-info
 .vscode
 
 **/__pycache__

@@ -5,7 +5,7 @@ import shutil
 
 class InstallCommand(Command):
     """
-    Installs all of Masonite's dependencies.
+    Installs all of Masonite's dependencies
 
     install
     """

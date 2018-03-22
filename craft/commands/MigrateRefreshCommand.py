@@ -5,7 +5,7 @@ from subprocess import check_output
 
 class MigrateRefreshCommand(Command):
     """
-    Migrate refresh.
+    Migrate refresh
 
     migrate:refresh
     """

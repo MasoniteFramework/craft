@@ -5,7 +5,7 @@ from subprocess import check_output
 
 class MigrateCommand(Command):
     """
-    Run migrations.
+    Run migrations
 
     migrate
     """

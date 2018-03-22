@@ -3,7 +3,7 @@ from subprocess import call
 
 class ServeCommand(Command):
     """
-    Run the Masonite server.
+    Run the Masonite server
 
     serve
         {--port=8000 : Specify which port to run the server}

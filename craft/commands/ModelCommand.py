@@ -4,7 +4,7 @@ import os
 
 class ModelCommand(Command):
     """
-    Creates a model.
+    Creates a model
 
     model
         {name : Name of the model}

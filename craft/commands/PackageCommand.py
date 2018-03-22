@@ -4,7 +4,7 @@ import os
 
 class PackageCommand(Command):
     """
-    Creates a new package.
+    Creates a new package
 
     package
         {name : Name of your Masonite project}

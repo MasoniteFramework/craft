@@ -4,7 +4,7 @@ import os
 
 class ControllerCommand(Command):
     """
-    Creates a controller.
+    Creates a controller
 
     controller
         {name : Name of the view you would like to create}

@@ -5,7 +5,7 @@ import shutil
 
 class ViewCommand(Command):
     """
-    Creates a view.
+    Creates a view
 
     view
         {name : Name of the view you would like to create}

@@ -5,7 +5,7 @@ from subprocess import call
 
 class MakeMigrationCommand(Command):
     """
-    Makes a new migration.
+    Makes a new migration
 
     migration
         {name : Name of your migration}
