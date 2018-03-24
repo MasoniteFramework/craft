@@ -11,7 +11,7 @@ class ControllerCommand(Command):
     """
 
     def handle(self):
-        controller = self.argument('controller')
+        controller = self.argument('name')
         if os.path.isfile('app/http/controllers/{0}.py'.format(controller)):
             self.error('{0} Controller Exists!'.format(controller))
         else:

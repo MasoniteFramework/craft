@@ -8,7 +8,7 @@ class JobCommand(Command):
     Creates a new Job
 
     job
-        {--name : Name of the job you want to create}
+        {name : Name of the job you want to create}
     """
 
     def handle(self):

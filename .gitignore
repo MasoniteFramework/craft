@@ -1,5 +1,6 @@
 venv
 craft.egg-info
+masonite_cli.egg-info
 .vscode
 
 **/__pycache__

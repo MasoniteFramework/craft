@@ -12,4 +12,8 @@ class ServeCommand(Command):
 
 
     def handle(self):
-        call(["waitress-serve", '--port', self.option('port'), "--host", self.option('host'), "wsgi:application"])
+        try:
+            call(["waitress-serve", '--port', self.option('port'), "--host", self.option('host'), "wsgi:application"])
+        except:
+            self.line('')
+            self.comment('Server aborted!')

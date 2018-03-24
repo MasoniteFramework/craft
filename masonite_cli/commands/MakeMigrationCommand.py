@@ -9,8 +9,8 @@ class MakeMigrationCommand(Command):
 
     migration
         {name : Name of your migration}
-        {--t|--table : Table you are migrating for}
-        {--c|--create : Table you want to create with this migration}
+        {--t|--table=False : Table you are migrating for}
+        {--c|--create=False : Table you want to create with this migration}
     """
 
     def handle(self):

@@ -1,22 +1,26 @@
 from cleo import Command
 import os
+import sys
+from ..helpers.helpers import  add_venv_site_packages
 from subprocess import check_output
 
 
-class MigrateRollbackCommand(Command):
+class MigrateResetCommand(Command):
     """
-    Migrate Rollback
+    Migrate reset
 
-    migrate:rollback
+    migrate:reset
     """
 
     def handle(self):
+        sys.path.append(os.getcwd())
         try:
+            add_venv_site_packages()
             from wsgi import container
-        except ImportError:
+        except ModuleNotFoundError:
             self.comment(
-                'This command must be ran at the Masonite root directory')
-            return
+                'This command must be ran inside of the root of a Masonite project directory')
+
 
         # Get any migration files from the Service Container
         migration_directory = ['databases/migrations']
@@ -36,15 +40,28 @@ class MigrateRollbackCommand(Command):
         migration_list = []
         for migration in migrator.get_repository().get_ran():
             for directory in migration_directory:
-                if os.path.exists(os.path.join(directory, migration+'.py')):
+                if os.path.exists(os.path.join(directory, migration + '.py')):
                     migration_list.append(os.path.join(os.getcwd(), directory))
                     break
 
         # Rollback the migrations
-        for migration in migration_list:
-            try:
-                migrator.rollback(migration)
-                for note in migrator.get_notes():
-                    self.line(note)
-            except:
-                pass
+        notes = []
+        for migration in migrator.get_repository().get_ran():
+            for migration_directory in migration_list:
+                try:
+                    migrator.reset(migration_directory)
+
+                except:
+                    pass
+
+                if migrator.get_notes():
+                    notes += migrator.get_notes()
+
+
+        # Show notes from the migrator
+        self.line('')
+        for note in notes:
+            if not 'Nothing to rollback.' in note:
+                self.line(note)
+        if not notes:
+            self.info('Nothing to rollback')

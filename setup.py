@@ -1,15 +1,21 @@
 from setuptools import setup
 
 setup(
-    name="craft",
+    name="masonite-cli",
     version='0.0.1',
-    packages=['craft'],
+    packages=[
+        'masonite_cli',
+        'masonite_cli.helpers',
+    ],
+    py_modules=['masonite_cli'],
     install_requires=[
-        'masonite',
+        'cleo',
+        'cryptography==2.1.4',
+        'requests==2.18.4',
     ],
     include_package_data=True,
     entry_points='''
         [console_scripts]
-        craft=craft.application:application.run
+        craft=masonite_cli.application:application.run
     ''',
 )

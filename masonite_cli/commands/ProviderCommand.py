@@ -8,7 +8,7 @@ class ProviderCommand(Command):
     Creates a new Service Provider
 
     provider
-        {--name : Name of the Service Provider you want to create}
+        {name : Name of the Service Provider you want to create}
     """
 
     def handle(self):

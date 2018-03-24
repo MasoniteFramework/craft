@@ -6,7 +6,7 @@ import shutil
 class AuthCommand(Command):
     """
     Creates an authentication system
-
+    
     auth
     """
 
