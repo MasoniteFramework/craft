@@ -37,4 +37,10 @@ class PackageCommand(Command):
             os.getcwd(), '{0}/{1}'.format(name, '__init__.py')), 'w+')
         init_file.close()
 
+        integration_file = open(os.path.join(
+            os.getcwd(), '{0}/{1}'.format(name, 'integration.py')), 'w+')
+        integration_file.write('import os\n\n')
+        integration_file.write(
+            'package_directory = os.path.dirname(os.path.realpath(__file__))\n\n')
+        integration_file.close()
         self.info('Package Created Successfully!')

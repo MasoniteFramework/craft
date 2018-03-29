@@ -25,7 +25,7 @@ class MigrateResetCommand(Command):
         # Get any migration files from the Service Container
         migration_directory = ['databases/migrations']
         for key, value in container.providers.items():
-            if '_MigrationDirectory' in key:
+            if 'MigrationDirectory' in key:
                 migration_directory.append(value)
 
         # Load in the Orator migration system
