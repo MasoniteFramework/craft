@@ -2,14 +2,15 @@ from setuptools import setup
 
 setup(
     name="masonite-cli",
-    version='0.0.1',
+    version='1.1.0',
     packages=[
         'masonite_cli',
+        'masonite_cli.commands',
         'masonite_cli.helpers',
     ],
     py_modules=['masonite_cli'],
     install_requires=[
-        'cleo',
+        'cleo==0.6.4',
         'cryptography==2.1.4',
         'requests==2.18.4',
     ],
