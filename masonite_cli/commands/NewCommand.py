@@ -11,8 +11,8 @@ class NewCommand(Command):
 
     new
         {name : Name of your Masonite project}
-        {--b|--branch : Specify which branch from the Masonite repo you would like to install}
-        {--r|--release : Specify which version of Masonite you would like to install}
+        {--b|--branch=False : Specify which branch from the Masonite repo you would like to install}
+        {--r|--release=False : Specify which version of Masonite you would like to install}
     """
 
     def handle(self):
