@@ -17,7 +17,7 @@ class MigrateRollbackCommand(Command):
         try:
             add_venv_site_packages()
             from wsgi import container
-        except ModuleNotFoundError:
+        except ImportError:
             self.comment(
                 'This command must be ran inside of the root of a Masonite project directory')
 

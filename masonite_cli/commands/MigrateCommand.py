@@ -16,7 +16,7 @@ class MigrateCommand(Command):
         sys.path.append(os.getcwd())
         try:
             add_venv_site_packages()
-        except ModuleNotFoundError:
+        except ImportError:
             self.comment('This command must be ran inside of the root of a Masonite project directory')
 
         from wsgi import container

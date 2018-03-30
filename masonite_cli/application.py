@@ -72,7 +72,7 @@ try:
 except ErrorDuringImport as e:
     print(
         '\033[93mWarning: There was an error during importing a command from a service provider: {0}\033[0m'.format(e))
-except ModuleNotFoundError as e:
+except ImportError as e:
     pass
 
 if __name__ == '__main__':

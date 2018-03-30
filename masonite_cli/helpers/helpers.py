@@ -12,8 +12,8 @@ def add_venv_site_packages():
         for directory in packages.SITE_PACKAGES:
             path = os.path.join(os.getcwd(), directory)
             sys.path.append(path)
-    except ModuleNotFoundError:
-        raise ModuleNotFoundError
+    except ImportError:
+        raise ImportError
 
     if 'VIRTUAL_ENV' in os.environ:
         python_version = None
