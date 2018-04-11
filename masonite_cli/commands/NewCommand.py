@@ -27,7 +27,7 @@ class NewCommand(Command):
                 if directory.startswith('masonite-'):
                     return self.comment('There is a folder that starts with "masonite-" and therefore craft cannot create a new project')
 
-            if branch:
+            if branch is not 'False':
                 get_branch = requests.get(
                     'https://api.github.com/repos/MasoniteFramework/masonite/branches/{0}'.format(branch))
                 
@@ -35,7 +35,7 @@ class NewCommand(Command):
                     return self.comment('Branch {0} does not exist.'.format(branch))
 
                 zipball = 'http://github.com/MasoniteFramework/masonite/archive/{0}.zip'.format(branch)
-            elif version:
+            elif version is not 'False':
                 get_zip_url = requests.get(
                     'https://api.github.com/repos/MasoniteFramework/masonite/releases/tags/v{0}'.format(version))
 
