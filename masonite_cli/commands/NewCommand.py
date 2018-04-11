@@ -19,6 +19,7 @@ class NewCommand(Command):
         name = self.argument('name')
         branch = self.option('branch')
         version = self.option('release')
+        self.info(branch)
         if not os.path.isdir(os.path.join(os.getcwd(),name)):
             from io import BytesIO
             import requests
@@ -27,7 +28,8 @@ class NewCommand(Command):
                 if directory.startswith('masonite-'):
                     return self.comment('There is a folder that starts with "masonite-" and therefore craft cannot create a new project')
 
-            if branch is not 'False':
+            if branch != 'False':
+                self.info('create a branch')
                 get_branch = requests.get(
                     'https://api.github.com/repos/MasoniteFramework/masonite/branches/{0}'.format(branch))
                 
@@ -35,7 +37,8 @@ class NewCommand(Command):
                     return self.comment('Branch {0} does not exist.'.format(branch))
 
                 zipball = 'http://github.com/MasoniteFramework/masonite/archive/{0}.zip'.format(branch)
-            elif version is not 'False':
+            elif version != 'False':
+                self.info('create a version')
                 get_zip_url = requests.get(
                     'https://api.github.com/repos/MasoniteFramework/masonite/releases/tags/v{0}'.format(version))
 

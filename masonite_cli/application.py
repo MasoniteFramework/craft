@@ -22,7 +22,7 @@ from .commands.ProviderCommand import ProviderCommand
 from .commands.ServeCommand import ServeCommand
 from .commands.ViewCommand import ViewCommand
 
-application = Application('Craft Version:', '1.1.4')
+application = Application('Craft Version:', '1.1.5')
 application.add(AuthCommand())
 application.add(CommandCommand())
 application.add(ControllerCommand())
