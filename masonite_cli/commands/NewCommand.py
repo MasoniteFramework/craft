@@ -57,7 +57,8 @@ class NewCommand(Command):
                 tags = []
 
                 for release in get_zip_url.json():
-                    tags.append(release['tag_name'].replace('v', ''))
+                    if release['prerelease'] is False:
+                        tags.append(release['tag_name'].replace('v', ''))
 
                 tags = sorted(tags, key=lambda v: [int(i) for i in v.split('.')], reverse=True)
                 
