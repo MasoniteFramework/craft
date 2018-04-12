@@ -3,6 +3,7 @@ import os
 import shutil
 import requests
 import zipfile
+import json
 
 
 class NewCommand(Command):
@@ -19,7 +20,6 @@ class NewCommand(Command):
         name = self.argument('name')
         branch = self.option('branch')
         version = self.option('release')
-        self.info(branch)
         if not os.path.isdir(os.path.join(os.getcwd(),name)):
             from io import BytesIO
             import requests
@@ -38,17 +38,31 @@ class NewCommand(Command):
 
                 zipball = 'http://github.com/MasoniteFramework/masonite/archive/{0}.zip'.format(branch)
             elif version != 'False':
-                self.info('create a version')
                 get_zip_url = requests.get(
-                    'https://api.github.com/repos/MasoniteFramework/masonite/releases/tags/v{0}'.format(version))
+                    'https://api.github.com/repos/MasoniteFramework/masonite/releases')
+                zipball = False
 
-                try:
-                    zipball = get_zip_url.json()['zipball_url']
-                except:
-                    return self.comment('Version {0} does not exist.'.format(version))
+                for release in get_zip_url.json():
+                    if 'tag_name' in release and release['tag_name'].startswith('v{0}'.format(version)):
+                        self.info('Installing version {0}'.format(release['tag_name']))
+                        self.line('')
+                        zipball = release['zipball_url']
+                        break
+                        
+                if zipball is False:
+                    return self.info('Version {0} could not be found'.format(version))
             else:
                 get_zip_url = requests.get(
-                    'https://api.github.com/repos/MasoniteFramework/masonite/releases/latest')
+                    'https://api.github.com/repos/MasoniteFramework/masonite/releases')
+                tags = []
+
+                for release in get_zip_url.json():
+                    tags.append(release['tag_name'].replace('v', ''))
+
+                tags = sorted(tags, key=lambda v: [int(i) for i in v.split('.')], reverse=True)
+                
+                get_zip_url = requests.get(
+                    'https://api.github.com/repos/MasoniteFramework/masonite/releases/tags/v{0}'.format(tags[0]))
                 
                 zipball = get_zip_url.json()['zipball_url']
 
