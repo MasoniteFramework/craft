@@ -22,7 +22,7 @@ from .commands.ProviderCommand import ProviderCommand
 from .commands.ServeCommand import ServeCommand
 from .commands.ViewCommand import ViewCommand
 
-application = Application('Craft Version:', '1.1.7')
+application = Application('Craft Version:', '1.1.8')
 application.add(AuthCommand())
 application.add(CommandCommand())
 application.add(ControllerCommand())
@@ -48,8 +48,7 @@ sys.path.append(os.getcwd())
 try:
     add_venv_site_packages()
     from wsgi import container
-except Exception as e:
-    print(e)
+except Exception:
     pass
 
 try:
@@ -69,10 +68,10 @@ try:
         application.add(
             container.make('{0}'.format(command))
         )
-except ErrorDuringImport as e:
-    print(
-        '\033[93mWarning: There was an error during importing a command from a service provider: {0}\033[0m'.format(e))
-except ImportError as e:
+except ErrorDuringImport:
+    pass
+
+except ImportError:
     pass
 
 if __name__ == '__main__':

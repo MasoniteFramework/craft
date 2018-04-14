@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name="masonite-cli",
-    version='1.1.7',
+    version='1.1.8',
     packages=[
         'masonite_cli',
         'masonite_cli.commands',
