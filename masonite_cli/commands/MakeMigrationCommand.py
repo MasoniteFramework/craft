@@ -16,10 +16,10 @@ class MakeMigrationCommand(Command):
     def handle(self):
         name = self.argument('name')
 
-        if self.option('create'):
+        if self.option('create') != 'False':
             call(['orator', 'make:migration', name,
                             '-p', 'databases/migrations', '--table', self.option('create'), '--create'])
-        elif self.option('table'):
+        elif self.option('table') != 'False':
             call(['orator', 'make:migration', name,
                             '-p', 'databases/migrations', '--table', self.option('table')])
         else:
