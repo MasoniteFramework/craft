@@ -1,0 +1,2 @@
+include masonite_cli/masonite_snippets/auth/controllers/*
+include masonite_cli/masonite_snippets/auth/templates/auth/*
