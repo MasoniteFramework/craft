@@ -6,10 +6,12 @@ from .helpers.helpers import add_venv_site_packages
 
 from .commands.NewCommand import NewCommand
 from .commands.InstallCommand import InstallCommand
+from .commands.PackageCommand import PackageCommand
 
-application = Application('Craft Version:', '2.0.0')
+application = Application('Craft Version:', '2.0.1')
 application.add(NewCommand())
 application.add(InstallCommand())
+application.add(PackageCommand())
 
 
 ERROR = None
