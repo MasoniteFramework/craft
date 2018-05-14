@@ -8,7 +8,7 @@ from .commands.NewCommand import NewCommand
 from .commands.InstallCommand import InstallCommand
 from .commands.PackageCommand import PackageCommand
 
-application = Application('Craft Version:', '2.0.1')
+application = Application('Craft Version:', '2.0.2')
 application.add(NewCommand())
 application.add(InstallCommand())
 application.add(PackageCommand())

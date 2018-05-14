@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name="masonite-cli",
-    version='2.0.1',
+    version='2.0.2',
     packages=[
         'masonite_cli',
         'masonite_cli.commands',
@@ -10,8 +10,8 @@ setup(
     ],
     py_modules=['masonite_cli'],
     install_requires=[
-        'cleo==0.6.4',
-        'cryptography==2.1.4',
+        'cleo==0.6.5',
+        'cryptography',
         'requests==2.18.4',
     ],
     include_package_data=True,

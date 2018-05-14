@@ -4,6 +4,8 @@ import shutil
 import requests
 import zipfile
 import json
+import subprocess
+from ..exceptions import ProjectLimitReached
 
 
 class NewCommand(Command):
@@ -17,6 +19,7 @@ class NewCommand(Command):
     """
 
     def handle(self):
+
         name = self.argument('name')
         branch = self.option('branch')
         version = self.option('release')
@@ -27,48 +30,49 @@ class NewCommand(Command):
             for directory in os.listdir(os.getcwd()):
                 if directory.startswith('masonite-'):
                     return self.comment('There is a folder that starts with "masonite-" and therefore craft cannot create a new project')
+            try:
+                if branch != 'False':
+                    self.info('create a branch')
+                    get_branch = requests.get(
+                        'https://api.github.com/repos/MasoniteFramework/masonite/branches/{0}'.format(branch))
+                    
+                    if not 'name' in get_branch.json():
+                        return self.comment('Branch {0} does not exist.'.format(branch))
 
-            if branch != 'False':
-                self.info('create a branch')
-                get_branch = requests.get(
-                    'https://api.github.com/repos/MasoniteFramework/masonite/branches/{0}'.format(branch))
-                
-                if not 'name' in get_branch.json():
-                    return self.comment('Branch {0} does not exist.'.format(branch))
+                    zipball = 'http://github.com/MasoniteFramework/masonite/archive/{0}.zip'.format(branch)
+                elif version != 'False':
+                    get_zip_url = requests.get(
+                        'https://api.github.com/repos/MasoniteFramework/masonite/releases')
+                    zipball = False
 
-                zipball = 'http://github.com/MasoniteFramework/masonite/archive/{0}.zip'.format(branch)
-            elif version != 'False':
-                get_zip_url = requests.get(
-                    'https://api.github.com/repos/MasoniteFramework/masonite/releases')
-                zipball = False
+                    for release in get_zip_url.json():
+                        if 'tag_name' in release and release['tag_name'].startswith('v{0}'.format(version)):
+                            self.info('Installing version {0}'.format(release['tag_name']))
+                            self.line('')
+                            zipball = release['zipball_url']
+                            break
+                            
+                    if zipball is False:
+                        return self.info('Version {0} could not be found'.format(version))
+                else:
+                    get_zip_url = requests.get(
+                        'https://api.github.com/repos/MasoniteFramework/masonite/releases')
+                    tags = []
 
-                for release in get_zip_url.json():
-                    if 'tag_name' in release and release['tag_name'].startswith('v{0}'.format(version)):
-                        self.info('Installing version {0}'.format(release['tag_name']))
-                        self.line('')
-                        zipball = release['zipball_url']
-                        break
-                        
-                if zipball is False:
-                    return self.info('Version {0} could not be found'.format(version))
-            else:
-                get_zip_url = requests.get(
-                    'https://api.github.com/repos/MasoniteFramework/masonite/releases')
-                tags = []
+                    for release in get_zip_url.json():
+                        if release['prerelease'] is False:
+                            tags.append(release['tag_name'].replace('v', ''))
 
-                for release in get_zip_url.json():
-                    if release['prerelease'] is False:
-                        tags.append(release['tag_name'].replace('v', ''))
-
-                tags = sorted(tags, key=lambda v: [int(i) for i in v.split('.')], reverse=True)
-                
-                get_zip_url = requests.get(
-                    'https://api.github.com/repos/MasoniteFramework/masonite/releases/tags/v{0}'.format(tags[0]))
-                
-                zipball = get_zip_url.json()['zipball_url']
-
+                    tags = sorted(tags, key=lambda v: [int(i) for i in v.split('.')], reverse=True)
+                    
+                    get_zip_url = requests.get(
+                        'https://api.github.com/repos/MasoniteFramework/masonite/releases/tags/v{0}'.format(tags[0]))
+                    
+                    zipball = get_zip_url.json()['zipball_url']
+            except TypeError:
+                raise ProjectLimitReached('You have reached your hourly limit of creating new projects. Try again in 1 hour.')
             success = False
-            
+
             zipurl = zipball
 
             self.info('Crafting Application ...')
@@ -97,6 +101,13 @@ class NewCommand(Command):
                         os.rename(
                             os.path.join(os.getcwd(), '{0}'.format(directory)), os.getcwd() + '/' +name)
                         self.info('\nApplication Created Successfully!\n\nNow just cd into your project and run\n\n    $ craft install\n\nto install the project dependencies.\n\nCreate Something Amazing!')
+
+                        ## Install Dependencies
+                        try:
+                            import pipenv
+                            subprocess.call(["pipenv", "shell", "pipenv", "install", "&&", "craft", "install"], cwd='{}'.format(name))
+                        except Exception as e:
+                            pass
             else:
                 self.comment('Could Not Create Application :(')
         else:

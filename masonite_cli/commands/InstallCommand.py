@@ -8,13 +8,25 @@ class InstallCommand(Command):
     Installs all of Masonite's dependencies
 
     install
+        {name=None : Name of your Masonite project}
     """
 
     def handle(self):
-        call(["pip3", "install", "-r", "requirements.txt"])
+        name = self.argument('name')
 
-        # create the .env file if it does not exist
-        if not os.path.isfile('.env'):
-            shutil.copy('.env-example', '.env')
+        # Name is specified
+        if self.argument('name') != 'None':
+            if not os.path.isfile('{}/.env'.format(name)):
+                shutil.copy('{}/.env-example'.format(name), '{}/.env'.format(name))
+        else:
+            if not os.path.isfile('.env'.format(name)):
+                shutil.copy('.env-example'.format(name), '.env'.format(name))         
+        try: 
+            import pipenv
+        except ImportError:
+            call(["pip3", "install", "-r", "requirements.txt"])
 
-        call(["craft", "key", "--store"])
+        if self.argument('name') != 'None':
+            call(["craft", "key", "--store"], cwd='{}'.format(name))
+        else:
+            call(["craft", "key", "--store"])          
