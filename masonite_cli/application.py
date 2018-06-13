@@ -21,8 +21,14 @@ sys.path.append(os.getcwd())
 try:
     add_venv_site_packages()
     from wsgi import container
-except Exception:
-    pass
+except Exception as e:
+    try:
+        import masonite
+        print()
+        print('\033[93mWARNING: {}\033[0m'.format(e))
+        print()
+    except ImportError:
+        pass
 
 try:
     from config import packages

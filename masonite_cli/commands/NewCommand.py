@@ -102,12 +102,6 @@ class NewCommand(Command):
                             os.path.join(os.getcwd(), '{0}'.format(directory)), os.getcwd() + '/' +name)
                         self.info('\nApplication Created Successfully!\n\nNow just cd into your project and run\n\n    $ craft install\n\nto install the project dependencies.\n\nCreate Something Amazing!')
 
-                        ## Install Dependencies
-                        try:
-                            import pipenv
-                            subprocess.call(["pipenv", "shell", "pipenv", "install", "&&", "craft", "install"], cwd='{}'.format(name))
-                        except Exception as e:
-                            pass
             else:
                 self.comment('Could Not Create Application :(')
         else:

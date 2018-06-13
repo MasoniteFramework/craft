@@ -25,7 +25,7 @@ class InstallCommand(Command):
             import pipenv
         except ImportError:
             call(["pip3", "install", "-r", "requirements.txt"])
-
+            
         if self.argument('name') != 'None':
             call(["craft", "key", "--store"], cwd='{}'.format(name))
         else:
