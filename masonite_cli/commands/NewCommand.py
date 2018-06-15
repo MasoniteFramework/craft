@@ -32,7 +32,6 @@ class NewCommand(Command):
                     return self.comment('There is a folder that starts with "masonite-" and therefore craft cannot create a new project')
             try:
                 if branch != 'False':
-                    self.info('create a branch')
                     get_branch = requests.get(
                         'https://api.github.com/repos/MasoniteFramework/masonite/branches/{0}'.format(branch))
                     
