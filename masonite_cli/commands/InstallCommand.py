@@ -21,10 +21,8 @@ class InstallCommand(Command):
         else:
             if not os.path.isfile('.env'.format(name)):
                 shutil.copy('.env-example'.format(name), '.env'.format(name))         
-        try: 
-            import pipenv
-        except ImportError:
-            call(["pip3", "install", "-r", "requirements.txt"])
+        
+        call(["pip3", "install", "-r", "requirements.txt"])
             
         if self.argument('name') != 'None':
             call(["craft", "key", "--store"], cwd='{}'.format(name))
