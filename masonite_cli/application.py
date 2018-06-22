@@ -2,13 +2,13 @@ from cleo import Application, Command
 import os
 import sys
 from pydoc import ErrorDuringImport
-from .helpers.helpers import add_venv_site_packages
+from masonite_cli.helpers.helpers import add_venv_site_packages
 
-from .commands.NewCommand import NewCommand
-from .commands.InstallCommand import InstallCommand
-from .commands.PackageCommand import PackageCommand
+from masonite_cli.commands.NewCommand import NewCommand
+from masonite_cli.commands.InstallCommand import InstallCommand
+from masonite_cli.commands.PackageCommand import PackageCommand
 
-application = Application('Craft Version:', '2.0.4')
+application = Application('Craft Version:', '2.0.7')
 application.add(NewCommand())
 application.add(InstallCommand())
 application.add(PackageCommand())

@@ -33,7 +33,7 @@ class NewCommand(Command):
             try:
                 if branch != 'False':
                     get_branch = requests.get(
-                        'https://api.github.com/repos/MasoniteFramework/masonite/branches/{0}'.format(branch))
+                        'http://api.github.com/repos/MasoniteFramework/masonite/branches/{0}'.format(branch))
                     
                     if not 'name' in get_branch.json():
                         return self.comment('Branch {0} does not exist.'.format(branch))
@@ -41,7 +41,7 @@ class NewCommand(Command):
                     zipball = 'http://github.com/MasoniteFramework/masonite/archive/{0}.zip'.format(branch)
                 elif version != 'False':
                     get_zip_url = requests.get(
-                        'https://api.github.com/repos/MasoniteFramework/masonite/releases')
+                        'http://api.github.com/repos/MasoniteFramework/masonite/releases')
                     zipball = False
 
                     for release in get_zip_url.json():
@@ -55,7 +55,7 @@ class NewCommand(Command):
                         return self.info('Version {0} could not be found'.format(version))
                 else:
                     get_zip_url = requests.get(
-                        'https://api.github.com/repos/MasoniteFramework/masonite/releases')
+                        'http://api.github.com/repos/MasoniteFramework/masonite/releases')
                     tags = []
 
                     for release in get_zip_url.json():
@@ -65,7 +65,7 @@ class NewCommand(Command):
                     tags = sorted(tags, key=lambda v: [int(i) for i in v.split('.')], reverse=True)
                     
                     get_zip_url = requests.get(
-                        'https://api.github.com/repos/MasoniteFramework/masonite/releases/tags/v{0}'.format(tags[0]))
+                        'http://api.github.com/repos/MasoniteFramework/masonite/releases/tags/v{0}'.format(tags[0]))
                     
                     zipball = get_zip_url.json()['zipball_url']
             except TypeError:
@@ -85,7 +85,7 @@ class NewCommand(Command):
                         zfile.extractall(os.getcwd())
                 
                 success = True
-            except:
+            except ImportError:
                 # Python 2
                 import urllib
                 r = urllib.urlopen(zipurl)
@@ -93,6 +93,8 @@ class NewCommand(Command):
                     z.extractall(os.getcwd())
                 
                 success = True
+            except Exception as e:
+                raise e
 
             if success:
                 for directory in os.listdir(os.getcwd()):
