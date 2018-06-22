@@ -1,5 +1,6 @@
 import os
 import sys
+import platform
 
 def append_system_path():
     # sys.path.append(os.getcwd())
@@ -34,6 +35,15 @@ def add_venv_site_packages():
                 'site-packages'
             )
 
+            sys.path.append(site_packages_directory)
+
+        elif platform.system() == 'Windows':
+            site_packages_directory = os.path.join(
+                os.environ['VIRTUAL_ENV'],
+                'Lib',
+                'site-packages'
+            )
+            
             sys.path.append(site_packages_directory)
         else:
             print('\033[93mWARNING: Could not add the virtual environment you are currently in. Attempting to add: {0}\033[93m'.format(
