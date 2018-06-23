@@ -3,6 +3,7 @@ from subprocess import call
 import os
 import shutil
 
+
 class InstallCommand(Command):
     """
     Installs all of Masonite's dependencies
@@ -27,4 +28,4 @@ class InstallCommand(Command):
         if self.argument('name') != 'None':
             call(["craft", "key", "--store"], cwd='{}'.format(name))
         else:
-            call(["craft", "key", "--store"])          
+            call(["craft", "key", "--store"])
