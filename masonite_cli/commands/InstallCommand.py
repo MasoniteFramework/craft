@@ -9,6 +9,7 @@ class InstallCommand(Command):
 
     install
         {name=None : Name of your Masonite project}
+        {--no-key : If set, craft install command will not generate and store a new key.}
     """
 
     def handle(self):
@@ -27,4 +28,5 @@ class InstallCommand(Command):
         if self.argument('name') != 'None':
             call(["craft", "key", "--store"], cwd='{}'.format(name))
         else:
-            call(["craft", "key", "--store"])          
+            if not self.option('no-key'):
+                call(["craft", "key", "--store"])
