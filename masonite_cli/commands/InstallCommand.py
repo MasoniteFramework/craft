@@ -14,9 +14,8 @@ class InstallCommand(Command):
 
     def handle(self):
 
-        if not os.path.isfile('.env'.format(name)):
-            shutil.copy('.env-example'.format(name), '.env'.format(name))         
-        
+        shutil.copy('.env-example', '.env')         
+
         call(["pip3", "install", "-r", "requirements.txt"])
             
         if not self.option('no-key'):
