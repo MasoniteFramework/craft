@@ -13,7 +13,7 @@ class PackageCommand(Command):
     def handle(self):
         name = self.argument('name')
 
-        ## create setup.py
+        # create setup.py
         setup = open(os.path.join(os.getcwd(), 'setup.py'), 'w+')
         setup.write("from setuptools import setup\n\n")
         setup.write('setup(\n    ')

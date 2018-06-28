@@ -3,5 +3,6 @@ craft.egg-info
 masonite_cli.egg-info
 .vscode
 dist
+.idea
 
 **/__pycache__
