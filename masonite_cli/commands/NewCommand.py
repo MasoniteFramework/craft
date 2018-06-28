@@ -1,10 +1,6 @@
 from cleo import Command
 import os
-import shutil
-import requests
 import zipfile
-import json
-import subprocess
 from ..exceptions import ProjectLimitReached
 
 

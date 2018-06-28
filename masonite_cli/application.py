@@ -1,4 +1,4 @@
-from cleo import Application, Command
+from cleo import Application
 import os
 import sys
 from pydoc import ErrorDuringImport
