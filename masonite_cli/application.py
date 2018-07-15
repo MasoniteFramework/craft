@@ -8,7 +8,7 @@ from masonite_cli.commands.NewCommand import NewCommand
 from masonite_cli.commands.InstallCommand import InstallCommand
 from masonite_cli.commands.PackageCommand import PackageCommand
 
-application = Application('Craft Version:', '2.0.10')
+application = Application('Craft Version:', '2.0.11')
 application.add(NewCommand())
 application.add(InstallCommand())
 application.add(PackageCommand())
