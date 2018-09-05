@@ -1,6 +1,5 @@
 from cleo import Command
 from subprocess import call
-import os
 import shutil
 
 
