@@ -1,5 +1,6 @@
 from cleo import Command
 import os
+import shutil
 import zipfile
 from ..exceptions import ProjectLimitReached
 
@@ -10,6 +11,7 @@ class NewCommand(Command):
 
     new
         {name : Name of your Masonite project}
+        {target? : Path of you Masonite project}
         {--b|--branch=False : Specify which branch from the Masonite repo you would like to install}
         {--r|--release=False : Specify which version of Masonite you would like to install}
     """
@@ -17,6 +19,7 @@ class NewCommand(Command):
     def handle(self):
 
         name = self.argument('name')
+        target = self.argument('target')
         branch = self.option('branch')
         version = self.option('release')
         if not os.path.isdir(os.path.join(os.getcwd(),name)):
@@ -95,8 +98,17 @@ class NewCommand(Command):
             if success:
                 for directory in os.listdir(os.getcwd()):
                     if directory.startswith('MasoniteFramework-masonite') or directory.startswith('masonite-'):
-                        os.rename(
-                            os.path.join(os.getcwd(), '{0}'.format(directory)), os.getcwd() + '/' +name)
+                        if target:
+                            from_dir = os.path.join(os.getcwd(), '{0}'.format(directory))
+                            to_dir = os.path.abspath(os.path.expanduser(target))
+
+                            for file in os.listdir(from_dir):
+                                shutil.move(os.path.join(from_dir, file), to_dir)
+
+                            os.rmdir(from_dir)
+                        else:
+                            os.rename(
+                                os.path.join(os.getcwd(), '{0}'.format(directory)), os.getcwd() + '/' +name)
                         self.info('\nApplication Created Successfully!\n\nNow just cd into your project and run\n\n    $ craft install\n\nto install the project dependencies.\n\nCreate Something Amazing!')
 
             else:
