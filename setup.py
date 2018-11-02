@@ -12,7 +12,7 @@ setup(
     install_requires=[
         'cleo>=0.6,<=0.6.99',
         'cryptography',
-        'requests==2.19.1',
+        'requests==2.20.0',
     ],
     include_package_data=True,
     entry_points='''
