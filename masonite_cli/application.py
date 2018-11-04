@@ -1,14 +1,15 @@
-from cleo import Application
 import os
 import sys
 from pydoc import ErrorDuringImport
+
+from cleo import Application
+
+from masonite_cli.commands.InstallCommand import InstallCommand
+from masonite_cli.commands.NewCommand import NewCommand
+from masonite_cli.commands.PackageCommand import PackageCommand
 from masonite_cli.helpers.helpers import add_venv_site_packages
 
-from masonite_cli.commands.NewCommand import NewCommand
-from masonite_cli.commands.InstallCommand import InstallCommand
-from masonite_cli.commands.PackageCommand import PackageCommand
-
-application = Application('Craft Version:', '2.0.13')
+application = Application('Craft Version:', '2.1.0')
 application.add(NewCommand())
 application.add(InstallCommand())
 application.add(PackageCommand())
@@ -40,7 +41,7 @@ try:
 
     commands = []
     for key, value in container.providers.items():
-        if key.endswith('Command'):
+        if isinstance(key, str) and key.endswith('Command'):
             commands.append(key)
 
     for command in commands:
