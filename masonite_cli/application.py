@@ -51,7 +51,7 @@ try:
 except ErrorDuringImport as e:
     print(e)
 
-except ImportError as e:
+except ImportError:
     pass
 
 if __name__ == '__main__':
