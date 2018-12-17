@@ -11,7 +11,7 @@ class InstallCommand(Command):
     install
         {--no-key : If set, craft install command will not generate and store a new key}
         {--no-dev : If set, Masonite will install with dev dependencies}
-        {--f|--force=False : Overwrite .env if exists}
+        {--f|--force : Overwrite .env if exists}
     """
 
     def handle(self):
