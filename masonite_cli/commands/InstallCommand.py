@@ -11,11 +11,13 @@ class InstallCommand(Command):
     install
         {--no-key : If set, craft install command will not generate and store a new key}
         {--no-dev : If set, Masonite will install with dev dependencies}
+        {--f|--force : Overwrite .env if exists}
     """
 
     def handle(self):
 
-        shutil.copy('.env-example', '.env')
+        if not os.path.isfile('.env') or self.option('force'):
+            shutil.copy('.env-example', '.env')
 
         if os.path.isfile('Pipfile'):
             try:
