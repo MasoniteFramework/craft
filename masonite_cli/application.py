@@ -9,7 +9,7 @@ from masonite_cli.commands.NewCommand import NewCommand
 from masonite_cli.commands.PackageCommand import PackageCommand
 from masonite_cli.helpers.helpers import add_venv_site_packages
 
-application = Application('Craft Version:', '2.1.0')
+application = Application('Craft Version:', '2.1.1')
 application.add(NewCommand())
 application.add(InstallCommand())
 application.add(PackageCommand())
