@@ -3,5 +3,6 @@ masonite_cli.egg-info
 .vscode
 dist
 .idea
-
+**/*.pyc
+.env
 **/__pycache__
