@@ -16,7 +16,8 @@ def add_venv_site_packages():
             path = os.path.join(os.getcwd(), directory)
             sys.path.append(path)
     except ImportError:
-        raise ImportError('Not inside a Masonite project')
+        pass
+        # raise ImportError('Not inside a Masonite project')
 
     if 'VIRTUAL_ENV' in os.environ:
         python_version = None
