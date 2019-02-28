@@ -32,6 +32,12 @@ class PackageCommand(Command):
 
         manifest = open(os.path.join(os.getcwd(), name, 'MANIFEST.in'), 'w+')
         manifest.close()
+        
+        manifest = open(os.path.join(os.getcwd(), name, 'requirements.txt'), 'w+')
+        manifest.close()
+        
+        manifest = open(os.path.join(os.getcwd(), name, '.gitignore'), 'w+')
+        manifest.close()
 
 
         init_file = open(os.path.join(
