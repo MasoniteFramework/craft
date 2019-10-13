@@ -87,8 +87,6 @@ class NewCommand(Command):
                 r = urllib.urlopen(zipurl)
                 with zipfile.ZipFile(BytesIO(r.read())) as z:
                     z.extractall(os.getcwd())
-            except Exception as e:
-                raise e
 
             for directory in os.listdir(os.getcwd()):
                 if directory.startswith('MasoniteFramework-masonite') or directory.startswith('masonite-'):
