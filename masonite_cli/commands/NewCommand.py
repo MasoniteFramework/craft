@@ -77,16 +77,13 @@ class NewCommand(Command):
             try:
                 # Python 3
                 from urllib.request import urlopen
-
-                with urlopen(zipurl) as zipresp:
-                    with zipfile.ZipFile(BytesIO(zipresp.read())) as zfile:
-                        zfile.extractall(os.getcwd())
             except ImportError:
                 # Python 2
-                import urllib
-                r = urllib.urlopen(zipurl)
-                with zipfile.ZipFile(BytesIO(r.read())) as z:
-                    z.extractall(os.getcwd())
+                from urllib import urlopen
+
+            with urlopen(zipurl) as zipresp:
+                with zipfile.ZipFile(BytesIO(zipresp.read())) as zfile:
+                    zfile.extractall(os.getcwd())
 
             for directory in os.listdir(os.getcwd()):
                 if directory.startswith('MasoniteFramework-masonite') or directory.startswith('masonite-'):
