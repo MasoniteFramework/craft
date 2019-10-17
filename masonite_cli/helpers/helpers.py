@@ -3,11 +3,6 @@ import sys
 import platform
 
 
-def append_system_path():
-    # sys.path.append(os.getcwd())
-    print(os.getcwd())
-
-
 def add_venv_site_packages():
     try:
         from config import packages
